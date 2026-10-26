@@ -835,3 +835,259 @@ html {
     animation-name: heroFadeUp;
   }
 }
+/* ==========================================
+   PREMIUM 3D PORTFOLIO EFFECTS
+   ========================================== */
+
+/* 1. HERO: DEPTH AND LIGHT */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  right: 2%;
+  top: 8%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(116, 100, 255, 0.13) 0%,
+    rgba(116, 100, 255, 0.04) 45%,
+    transparent 72%
+  );
+  filter: blur(24px);
+  pointer-events: none;
+  z-index: -1;
+  animation: ambientGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes ambientGlow {
+  from {
+    transform: translate3d(-12px, -8px, 0) scale(0.95);
+    opacity: 0.65;
+  }
+
+  to {
+    transform: translate3d(12px, 14px, 0) scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* 2. 3D PORTRAIT */
+
+.hero-visual {
+  perspective: 1100px;
+}
+
+.portrait-frame {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition:
+    transform 0.25s ease-out,
+    box-shadow 0.35s ease;
+}
+
+.portrait-image {
+  transform: translateZ(20px);
+  backface-visibility: hidden;
+}
+
+.portrait-label {
+  transform: translateZ(35px);
+  transition: transform 0.35s ease;
+}
+
+.portrait-frame:hover .portrait-label {
+  transform: translateZ(48px);
+}
+
+.portrait-orbit {
+  transform: translateZ(-15px);
+}
+
+/* 3. FLOATING TECHNOLOGY BADGES */
+
+.floating-note {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.note-top {
+  animation: float3DTop 5s ease-in-out infinite;
+}
+
+.note-bottom {
+  animation: float3DBottom 6s ease-in-out infinite;
+}
+
+@keyframes float3DTop {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 25px) rotateY(-5deg);
+  }
+
+  50% {
+    transform: translate3d(0, -10px, 35px) rotateY(4deg);
+  }
+}
+
+@keyframes float3DBottom {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 20px) rotateY(4deg);
+  }
+
+  50% {
+    transform: translate3d(0, 8px, 30px) rotateY(-4deg);
+  }
+}
+
+/* 4. PROJECT CARDS WITH 3D DEPTH */
+
+.projects-grid {
+  perspective: 1200px;
+}
+
+.project-card {
+  transform-style: preserve-3d;
+  transform-origin: center;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.project-content {
+  transform: translateZ(12px);
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-content {
+  transform: translateZ(22px);
+}
+
+.project-art {
+  transform-style: preserve-3d;
+}
+
+.project-art-top,
+.art-wordmark,
+.art-illustration {
+  transform-style: preserve-3d;
+}
+
+.art-illustration {
+  transform: translateZ(18px);
+}
+
+.art-wordmark {
+  transform: translateZ(25px);
+}
+
+/* 5. SKILL CARDS WITH DEPTH */
+
+.skills-grid {
+  perspective: 1100px;
+}
+
+.skill-card {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.skill-card-top,
+.skill-card h3,
+.skill-card > p,
+.skill-card .tag-list {
+  transform: translateZ(8px);
+}
+
+/* 6. CERTIFICATE CARDS */
+
+.certificate-grid {
+  perspective: 1200px;
+}
+
+.certificate-card {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.certificate-info {
+  transform: translateZ(12px);
+}
+
+.certificate-image img {
+  backface-visibility: hidden;
+}
+
+/* 7. EDUCATION CARDS */
+
+.education-list {
+  perspective: 1000px;
+}
+
+.education-card {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.education-icon {
+  transform: translateZ(15px);
+}
+
+/* 8. SMOOTH TRANSFORM PERFORMANCE */
+
+.project-card,
+.skill-card,
+.certificate-card,
+.education-card,
+.portrait-frame {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 9. TOUCHSCREEN AND REDUCED MOTION SUPPORT */
+
+@media (hover: none), (pointer: coarse) {
+  .project-card,
+  .skill-card,
+  .certificate-card,
+  .education-card,
+  .portrait-frame {
+    transform: none !important;
+  }
+
+  .project-card:hover,
+  .skill-card:hover,
+  .certificate-card:hover,
+  .education-card:hover,
+  .portrait-frame:hover {
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero::before,
+  .note-top,
+  .note-bottom {
+    animation: none !important;
+  }
+
+  .portrait-frame,
+  .project-card,
+  .skill-card,
+  .certificate-card,
+  .education-card {
+    transform: none !important;
+    will-change: auto;
+  }
+}
