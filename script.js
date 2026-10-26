@@ -249,3 +249,106 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     });
   }
 })();
+/* ==========================================
+   INTERACTIVE 3D TILT EFFECTS
+   ========================================== */
+
+(() => {
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  const supportsHover = window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  ).matches;
+
+  if (reduceMotion || !supportsHover) {
+    return;
+  }
+
+  const tiltSettings = [
+    {
+      selector: ".portrait-frame",
+      maxRotate: 8,
+      perspective: 1100
+    },
+    {
+      selector: ".project-card",
+      maxRotate: 5,
+      perspective: 1200
+    },
+    {
+      selector: ".skill-card",
+      maxRotate: 4,
+      perspective: 1100
+    },
+    {
+      selector: ".certificate-card",
+      maxRotate: 4,
+      perspective: 1200
+    },
+    {
+      selector: ".education-card",
+      maxRotate: 3,
+      perspective: 1000
+    }
+  ];
+
+  tiltSettings.forEach((settings) => {
+    document.querySelectorAll(settings.selector).forEach((element) => {
+      let frameId = null;
+
+      const resetTilt = () => {
+        if (frameId) {
+          cancelAnimationFrame(frameId);
+          frameId = null;
+        }
+
+        element.style.transform = "";
+        element.style.removeProperty("--tilt-x");
+        element.style.removeProperty("--tilt-y");
+      };
+
+      element.addEventListener("pointermove", (event) => {
+        const rect = element.getBoundingClientRect();
+
+        if (!rect.width || !rect.height) return;
+
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+
+        const rotateY = (x - 0.5) * settings.maxRotate * 2;
+        const rotateX = (0.5 - y) * settings.maxRotate * 2;
+
+        if (frameId) {
+          cancelAnimationFrame(frameId);
+        }
+
+        frameId = requestAnimationFrame(() => {
+          element.style.transform = `
+            perspective(${settings.perspective}px)
+            rotateX(${rotateX.toFixed(2)}deg)
+            rotateY(${rotateY.toFixed(2)}deg)
+            translateY(-3px)
+          `;
+
+          element.style.setProperty(
+            "--tilt-x",
+            `${(x * 100).toFixed(1)}%`
+          );
+
+          element.style.setProperty(
+            "--tilt-y",
+            `${(y * 100).toFixed(1)}%`
+          );
+
+          frameId = null;
+        });
+      });
+
+      element.addEventListener("pointerleave", resetTilt);
+
+      element.addEventListener("pointercancel", resetTilt);
+    });
+  });
+})();
