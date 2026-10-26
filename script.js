@@ -136,3 +136,116 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     }
   });
 });
+/* ==========================================
+   PROFESSIONAL SCROLL ANIMATIONS
+   ========================================== */
+
+(() => {
+  // Enable animation styles only when JavaScript works.
+  document.documentElement.classList.add("js-motion");
+
+  const loader = document.getElementById("pageLoader");
+
+  // Hide the page loader after the page finishes loading.
+  const hideLoader = () => {
+    if (loader) {
+      loader.classList.add("is-hidden");
+    }
+  };
+
+  if (document.readyState === "complete") {
+    hideLoader();
+  } else {
+    window.addEventListener("load", hideLoader, { once: true });
+  }
+
+  // Respect accessibility preferences.
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  const revealElements = document.querySelectorAll(".reveal");
+
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    revealElements.forEach((element) => {
+      element.classList.add("is-visible");
+    });
+  } else {
+    const observer = new IntersectionObserver(
+      (entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            currentObserver.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+      }
+    );
+
+    revealElements.forEach((element) => {
+      observer.observe(element);
+    });
+  }
+
+  // Animate cards in sequence within each grid.
+  const staggerGroups = [
+    ".skills-grid",
+    ".projects-grid",
+    ".certificate-grid",
+    ".education-list"
+  ];
+
+  staggerGroups.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((group) => {
+      const cards = group.querySelectorAll(
+        ".skill-card, .project-card, .certificate-card, .education-card"
+      );
+
+      cards.forEach((card, index) => {
+        card.style.transitionDelay = `${(index % 3) * 90}ms`;
+      });
+    });
+  });
+
+  // Update the current navigation link while scrolling.
+  const sections = document.querySelectorAll(
+    "main section[id], section[id]"
+  );
+
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  if ("IntersectionObserver" in window && !reduceMotion) {
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          navLinks.forEach((link) => {
+            const isCurrent =
+              link.getAttribute("href") === `#${entry.target.id}`;
+
+            link.classList.toggle("active", isCurrent);
+
+            if (isCurrent) {
+              link.setAttribute("aria-current", "location");
+            } else {
+              link.removeAttribute("aria-current");
+            }
+          });
+        });
+      },
+      {
+        rootMargin: "-25% 0px -65% 0px",
+        threshold: 0
+      }
+    );
+
+    sections.forEach((section) => {
+      sectionObserver.observe(section);
+    });
+  }
+})();
