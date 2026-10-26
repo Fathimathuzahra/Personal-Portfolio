@@ -323,3 +323,515 @@ a.contact-item:hover { background: rgba(255,255,255,.06); border-color: rgba(255
 .certificates-section .projects-note { margin-top: 24px; }
 @media (max-width: 900px) { .certificate-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .certificate-grid { grid-template-columns: 1fr; } .certificate-view { opacity: 1; transform: none; } }
+/* ==========================================
+   PROFESSIONAL PORTFOLIO ANIMATIONS
+   ========================================== */
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+/* Keep animated elements stable */
+.hero-copy,
+.hero-visual,
+.section-heading,
+.about-copy,
+.about-panel,
+.skill-card,
+.timeline-item,
+.project-card,
+.education-card,
+.certificate-card,
+.contact-copy,
+.contact-details {
+  will-change: auto;
+}
+
+/* ==========================================
+   1. PAGE LOADER
+   ========================================== */
+
+.page-loader {
+  transition:
+    opacity 0.6s ease,
+    visibility 0.6s ease;
+}
+
+.page-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-track i {
+  animation: loaderProgress 1.2s ease-in-out infinite;
+}
+
+@keyframes loaderProgress {
+  0% {
+    transform: translateX(-110%);
+  }
+
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+/* ==========================================
+   2. HERO ENTRANCE
+   ========================================== */
+
+.hero-copy > * {
+  animation: heroFadeUp 0.75s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+.hero-copy > *:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.hero-copy > *:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.hero-copy > *:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.hero-copy > *:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.hero-copy > *:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+.hero-copy > *:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+.hero-visual {
+  animation: heroFadeRight 1s cubic-bezier(.2, .7, .2, 1) both;
+  animation-delay: 0.25s;
+}
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroFadeRight {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ==========================================
+   3. PORTRAIT AND FLOATING BADGES
+   ========================================== */
+
+.portrait-frame {
+  transition: transform 0.45s ease;
+}
+
+.portrait-frame:hover {
+  transform: translateY(-5px);
+}
+
+.portrait-image {
+  transition:
+    transform 0.6s ease,
+    filter 0.6s ease;
+}
+
+.portrait-frame:hover .portrait-image {
+  transform: scale(1.025);
+}
+
+.portrait-orbit {
+  animation: orbitFloat 7s ease-in-out infinite;
+}
+
+.orbit-two {
+  animation-delay: -3.5s;
+}
+
+@keyframes orbitFloat {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(3deg) translateY(-7px);
+  }
+}
+
+.floating-note {
+  animation: badgeFloat 5s ease-in-out infinite;
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.note-bottom {
+  animation-delay: -2.5s;
+}
+
+.floating-note:hover {
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+}
+
+@keyframes badgeFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* ==========================================
+   4. SCROLL REVEAL
+   ========================================== */
+
+/* Elements are visible by default if JavaScript
+   is disabled or unavailable. */
+
+.js-motion .reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s cubic-bezier(.2, .7, .2, 1),
+    transform 0.7s cubic-bezier(.2, .7, .2, 1);
+}
+
+.js-motion .reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js-motion .reveal.reveal-delay {
+  transition-delay: 0.15s;
+}
+
+/* ==========================================
+   5. BUTTON INTERACTIONS
+   ========================================== */
+
+.button {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.10);
+}
+
+.button i {
+  transition: transform 0.25s ease;
+}
+
+.button:hover i {
+  transform: translateX(4px);
+}
+
+.button:active {
+  transform: translateY(-1px);
+}
+
+/* ==========================================
+   6. SKILL CARDS
+   ========================================== */
+
+.skill-card {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+.skill-symbol {
+  transition:
+    transform 0.35s ease,
+    background-color 0.35s ease;
+}
+
+.skill-card:hover .skill-symbol {
+  transform: translateY(-3px) scale(1.06);
+}
+
+.skill-number {
+  transition: opacity 0.3s ease;
+}
+
+.skill-card:hover .skill-number {
+  opacity: 1;
+}
+
+/* ==========================================
+   7. EXPERIENCE TIMELINE
+   ========================================== */
+
+.timeline-item {
+  transition: transform 0.35s ease;
+}
+
+.timeline-item:hover {
+  transform: translateX(5px);
+}
+
+.timeline-card {
+  transition:
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.timeline-item:hover .timeline-card {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
+}
+
+.timeline-marker {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.timeline-item:hover .timeline-marker {
+  transform: scale(1.15);
+}
+
+/* ==========================================
+   8. PROJECT CARDS
+   ========================================== */
+
+.project-card {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.09);
+}
+
+.project-art {
+  overflow: hidden;
+}
+
+.art-illustration {
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover .art-illustration {
+  transform: scale(1.07) rotate(-2deg);
+}
+
+.project-art-top i {
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-art-top i {
+  transform: translate(3px, -3px);
+}
+
+.text-link {
+  transition:
+    gap 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.text-link:hover {
+  opacity: 0.8;
+}
+
+.text-link i {
+  transition: transform 0.25s ease;
+}
+
+.text-link:hover i {
+  transform: translateX(4px);
+}
+
+/* ==========================================
+   9. EDUCATION CARDS
+   ========================================== */
+
+.education-card {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.education-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
+}
+
+.education-icon {
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.education-card:hover .education-icon {
+  transform: scale(1.06);
+}
+
+/* ==========================================
+   10. CERTIFICATE CARDS
+   ========================================== */
+
+.certificate-card {
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.certificate-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.09);
+}
+
+.certificate-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.certificate-image img {
+  transition: transform 0.55s ease;
+}
+
+.certificate-card:hover .certificate-image img {
+  transform: scale(1.045);
+}
+
+.certificate-view {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* ==========================================
+   11. NAVIGATION UNDERLINE
+   ========================================== */
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
+/* ==========================================
+   12. SOCIAL LINKS
+   ========================================== */
+
+.social-links a {
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.social-links a:hover {
+  transform: translateY(-4px);
+}
+
+/* ==========================================
+   13. BACK TO TOP
+   ========================================== */
+
+.back-to-top {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.back-to-top:hover {
+  transform: translateY(-5px);
+}
+
+/* ==========================================
+   14. ACCESSIBILITY
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .js-motion .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Reduce hover movement on smaller screens */
+@media (max-width: 768px) {
+  .skill-card:hover,
+  .project-card:hover,
+  .education-card:hover,
+  .certificate-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .timeline-item:hover {
+    transform: none;
+  }
+
+  .hero-visual {
+    animation-name: heroFadeUp;
+  }
+}
